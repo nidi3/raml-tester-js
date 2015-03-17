@@ -1,0 +1,30 @@
+{
+  "name": "raml-tester",
+  "title": "Verify requests / responses against a RAML definition",
+  "description": "Verify requests / responses against a RAML definition",
+  "version": "0.0.1",
+  "private": false,
+  "author": {
+    "name": "Stefan Niederhauser <ich@nidi.guru>",
+    "company": ""
+  },
+  "main": "lib/raml-tester.js",
+  "bin": {
+    "raml-tester": "bin/raml-tester-cli"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nidi3/raml-tester-proxy-node"
+  },
+  "dependencies": {
+    "tmp": "0.0.25"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-copy": "~0.8.0",
+    "mocha": "~2.2.1",
+    "chai": "~2.1.2",
+    "grunt-mocha-cli": "~1.12.0"
+  }
+}

@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+const rt = require('raml-tester');
+const params = process.argv.slice(2);
+rt.isSameParams(params, function (isSame) {
+    if (isSame) {
+        console.log('Reloading proxy');
+        rt.reload(rt.findPort(params));
+    } else {
+        console.log('Starting proxy...');
+        rt.start(params, function (ok) {
+            if (!ok) {
+                console.log('Stop waiting for proxy');
+            }
+        });
+    }
+});
