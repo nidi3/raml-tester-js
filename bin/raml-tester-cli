@@ -2,16 +2,25 @@
 
 const rt = require('raml-tester');
 const params = process.argv.slice(2);
-rt.isSameParams(params, function (isSame) {
-    if (isSame) {
-        console.log('Reloading proxy');
-        rt.reload(rt.findPort(params));
-    } else {
-        console.log('Starting proxy...');
-        rt.start(params, function (ok) {
-            if (!ok) {
-                console.log('Stop waiting for proxy');
-            }
-        });
+if (params[0] === 'stop') {
+    if (params.length === 1) {
+        console.log('Missing port argument');
+        process.exit(1);
     }
-});
+    rt.stop(parseInt(params[1]));
+    console.log('Proxy stopped');
+} else {
+    rt.isSameParams(params, function (isSame) {
+        if (isSame) {
+            console.log('Reloading proxy');
+            rt.reload(rt.findPort(params));
+        } else {
+            console.log('Starting proxy...');
+            rt.start(params, function (ok) {
+                if (!ok) {
+                    console.log('Stop waiting for proxy');
+                }
+            });
+        }
+    });
+}
