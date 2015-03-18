@@ -17,7 +17,8 @@
     "url": "https://github.com/nidi3/raml-tester-proxy-node"
   },
   "dependencies": {
-    "tmp": "0.0.25"
+    "tmp": "0.0.25",
+    "tail": "~0.4.0"
   },
   "devDependencies": {
     "grunt": "~0.4.5",

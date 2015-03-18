@@ -3,11 +3,8 @@
 const rt = require('raml-tester');
 const params = process.argv.slice(2);
 if (params[0] === 'stop') {
-    if (params.length === 1) {
-        console.log('Missing port argument');
-        process.exit(1);
-    }
-    rt.stop(parseInt(params[1]));
+    const port = params.length > 1 ? parseInt(params[1]) : 8090;
+    rt.stop(port);
     console.log('Proxy stopped');
 } else {
     rt.isSameParams(params, function (isSame) {

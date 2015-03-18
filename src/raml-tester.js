@@ -52,15 +52,14 @@ module.exports = {
         const watcher = [];
         const cleanup = function (ok) {
             if (watcher.length > 0) {
-                watcher[0].close();
+                watcher[0].unwatch();
             }
             out.removeCallback();
             proxy.unref();
             callback(ok);
         };
-        quickErrorHandler(proxy, out.name, cleanup);
-        normalStartupHandler(watcher, out.name, cleanup, 3000);
-        globalTimeoutHandler(cleanup, 30000);
+        proxyErrorHandler(proxy, cleanup);
+        proxyStartupHandler(watcher, out.name, cleanup, 30000);
     },
     findPort: function (params) {
         var port = 8090;
@@ -77,28 +76,28 @@ module.exports = {
     }
 };
 
-function quickErrorHandler(proxy, file, cleanup) {
+function proxyErrorHandler(proxy, cleanup) {
     proxy.on('exit', function (e) {
-        const log = fs.readFileSync(file, {encoding: 'utf-8'});
-        console.log(log);
         cleanup(false);
     });
 }
 
-function normalStartupHandler(watcher, file, cleanup, timeout) {
-    setTimeout(function () {
-        watcher[0] = fs.watch(file, function (event) {
-            const log = fs.readFileSync(file, {encoding: 'utf-8'});
-            const line = log.substring(log.lastIndexOf('\n', log.length - 2) + 1, log.length - 1);
-            console.log(line);
-            if (line.substring(line.length - 7) === 'started') {
-                cleanup(true);
-            }
-        })
-    }, timeout).unref();
-}
+function proxyStartupHandler(watcher, file, cleanup, timeout) {
+    const tail = require('tail');
 
-function globalTimeoutHandler(cleanup, timeout) {
+    watcher[0] = new tail.Tail(file);
+    watcher[0].on("line", function (line) {
+        console.log(line);
+        if (line.substring(line.length - 7) === 'started') {
+            cleanup(true);
+        }
+    });
+
+    watcher[0].on("error", function (error) {
+        console.log('ERROR: ', error);
+        cleanup(false);
+    });
+
     setTimeout(function () {
         cleanup(false);
     }, timeout).unref();
