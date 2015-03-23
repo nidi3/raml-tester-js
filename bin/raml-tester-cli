@@ -2,15 +2,26 @@
 
 const rt = require('raml-tester');
 const params = process.argv.slice(2);
-if (params[0] === 'stop') {
-    const port = params.length > 1 ? parseInt(params[1]) : 8090;
-    rt.stop(port);
+
+switch (params[0]) {
+case 'stop':
+    rt.stop(parseParams(params).port);
     console.log('Proxy stopped');
-} else {
+    break;
+case 'reload':
+    request('reload', parseParams(params));
+    break;
+case 'reports':
+    request('reports', parseParams(params));
+    break;
+case 'usage':
+    request('usage', parseParams(params));
+    break;
+default:
     rt.isSameParams(params, function (isSame) {
         if (isSame) {
             console.log('Reloading proxy');
-            rt.reload(rt.findPort(params));
+            reload({port: rt.findPort(params), clearReports: true, clearUsage: true});
         } else {
             console.log('Starting proxy...');
             rt.start(params, function (ok) {
@@ -19,5 +30,42 @@ if (params[0] === 'stop') {
                 }
             });
         }
+    });
+}
+
+function parseParams(params) {
+    var res = {port: 8090, clearReports: false, clearUsage: false};
+
+    function parseParam(param) {
+        switch (param) {
+        case 'reports':
+            res.clearReports = true;
+            break;
+        case 'usage':
+            res.clearUsage = true;
+            break;
+        default:
+            console.log("Ignoring unknown option: '" + params[i] + "'. Allowed are 'reports' and 'usage'");
+        }
+    }
+
+    for (var i = 1; i < params.length; i++) {
+        if (i == 1) {
+            var p = parseInt(params[i]);
+            if (isNaN(p)) {
+                parseParam(params[i]);
+            } else {
+                res.port = p;
+            }
+        }
+    }
+    return res;
+}
+
+function request(name, config) {
+    rt.request(name, config, function (res) {
+        console.log(res);
+    }, function (e) {
+        console.log('Could not execute action: ' + e);
     });
 }

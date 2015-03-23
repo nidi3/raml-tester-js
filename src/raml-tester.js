@@ -1,24 +1,15 @@
-const fs = require('fs');
+const fs = require('fs'),
+    http = require('http');
 
 module.exports = {
     stop: function (port) {
-        const http = require('http');
         var req = http.request({port: port, path: '/@@@proxy/stop'});
         req.on('error', function (e) {
             //ignore
         });
         req.end();
     },
-    reload: function (port) {
-        const http = require('http');
-        var req = http.request({port: port, path: '/@@@proxy/reload'});
-        req.on('error', function (e) {
-            console.log('could not reload');
-        });
-        req.end();
-    },
     isSameParams: function (params, callback) {
-        const http = require('http');
         var req = http.request({
             method: 'POST',
             port: this.findPort(params),
@@ -61,6 +52,29 @@ module.exports = {
         proxyErrorHandler(proxy, cleanup);
         proxyStartupHandler(watcher, out.name, cleanup, 30000);
     },
+    reload: function (config, ok, fail) {
+        this.request('reload', ok, fail);
+    },
+    reports: function (config, ok, fail) {
+        this.request('reports', ok, fail);
+    },
+    usage: function (config, ok, fail) {
+        this.request('usage', ok, fail);
+    },
+    request: function (url, config, ok, fail) {
+        var req = http.request({
+            port: config.port,
+            path: '/@@@proxy/' + url + '?' + (config.clearReports ? 'clear-reports=true' : '') + (config.clearUsage ? '&clear-usage=true' : '')
+        }, function (res) {
+            res.on('data', function (chunk) {
+                ok('' + chunk);
+            });
+        });
+        req.on('error', function (e) {
+            fail(e);
+        });
+        req.end();
+    },
     findPort: function (params) {
         var port = 8090;
         for (var i = 0; i < params.length; i++) {
@@ -102,3 +116,4 @@ function proxyStartupHandler(watcher, file, cleanup, timeout) {
         cleanup(false);
     }, timeout).unref();
 }
+
