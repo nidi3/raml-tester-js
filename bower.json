@@ -1,0 +1,22 @@
+{
+  "name": "raml-tester",
+  "version": "0.0.1",
+  "homepage": "https://github.com/nidi3/raml-tester-proxy-node",
+  "authors": [
+    "Stefan Niederhauser <ich@nidi.guru>"
+  ],
+  "description": "Verify requests / responses against a RAML definition",
+  "main": "lib/raml-tester-browser.js",
+  "keywords": [
+    "RAML",
+    "test"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
