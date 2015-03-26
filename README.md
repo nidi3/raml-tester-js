@@ -1,2 +1,2 @@
-raml-tester-proxy-node
-======================
+raml-tester-js
+==============
