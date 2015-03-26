@@ -76,7 +76,7 @@ module.exports = {
         req.end();
     },
     findPort: function (params) {
-        var port = 8090;
+        var port = 8099;
         for (var i = 0; i < params.length; i++) {
             if (params[i].substring(0, 2) === '-p') {
                 if (params[i].length > 2) {
