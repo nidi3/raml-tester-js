@@ -8,6 +8,9 @@
     "name": "Stefan Niederhauser <ich@nidi.guru>",
     "company": ""
   },
+  "bin": {
+    "raml-tester": "bin/raml-tester-cli"
+  },
   "main": "lib/raml-tester.js",
   "repository": {
     "type": "git",

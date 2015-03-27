@@ -1,22 +1,32 @@
 /*global module*/
 
+var version = '0.0.4-SNAPSHOT';
+
 module.exports = function (grunt) {
     grunt.initConfig({
         clean: {
-            clean: ['lib']
+            clean: ['bin','lib']
         },
         copy: {
             dist: {
                 files: [
                     {
+                        src: process.env['HOME'] + '/.m2/repository/guru/nidi/raml/raml-tester-proxy/' + version + '/raml-tester-proxy-' + version + '.jar',
+                        dest: 'bin/raml-tester-proxy.jar'
+                    }, {
                         cwd: 'src/',
                         expand: true,
-                        src: '*.js',
+                        src: 'raml-tester.js',
                         dest: 'lib'
+                    },{
+                        cwd: 'src/',
+                        expand: true,
+                        src: 'raml-tester-cli',
+                        dest: 'bin'
                     }]
             }
         },
-        mochacli: {
+        mochacli:{
             all: ['test/*.js']
         }
     });

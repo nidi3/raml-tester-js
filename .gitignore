@@ -2,4 +2,3 @@
 target/
 *.iml
 node_modules/
-bin/raml-tester-proxy.jar
