@@ -1,6 +1,6 @@
 {
   "name": "raml-tester",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "homepage": "https://github.com/nidi3/raml-tester-js",
   "authors": [
     "Stefan Niederhauser <ich@nidi.guru>"
@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "ignore": [
-    "bin/*",
+    "bin",
     "lib/raml-tester.js",
     "**/.*",
     "node_modules",
