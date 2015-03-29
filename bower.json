@@ -13,6 +13,8 @@
   ],
   "license": "MIT",
   "ignore": [
+    "bin/*",
+    "lib/raml-tester.js",
     "**/.*",
     "node_modules",
     "bower_components",
