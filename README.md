@@ -46,4 +46,8 @@ The following functions are defined and exposed by the variable `RAML.tester`:
  
 They all expect a running proxy server at port 8099 (configurable with the `setPort` function).
 
+Additionally, the `addJasmineMatchers` function provides support for jasmine.
+
 For more details see [raml-tester-browser.js](src/raml-tester-browser.js).
+
+For examples how to use it, see [raml-tester-uc-js](https://github.com/nidi3/raml-tester-uc-js).
