@@ -1,12 +1,12 @@
 raml-tester-js
 ==============
 
-A node.js and bower module for [raml-tester-proxy](../raml-tester-proxy).
+A node.js and bower module for [raml-tester-proxy](https://github.com/nidi3/raml-tester-proxy).
 
 ## Node.js module
 
 ### Prerequisits
-This module is a wrapper around [raml-tester-proxy](../raml-tester-proxy), therefore a java runtime must be installed on the target machine.
+This module is a wrapper around [raml-tester-proxy](https://github.com/nidi3/raml-tester-proxy), therefore a java runtime must be installed on the target machine.
 
 ### Install
 ```
@@ -18,7 +18,7 @@ On the command line, just use it with
 ```
 raml-tester <options>
 ```
-where options are exactly the same as for [raml-tester-proxy](../raml-tester-proxy).
+where options are exactly the same as for [raml-tester-proxy](https://github.com/nidi3/raml-tester-proxy).
 
 For the javascript API, see [raml-tester.js](src/raml-tester.js).
 
