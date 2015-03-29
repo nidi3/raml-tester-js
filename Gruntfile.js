@@ -5,20 +5,20 @@ var version = '0.0.4-SNAPSHOT';
 module.exports = function (grunt) {
     grunt.initConfig({
         clean: {
-            clean: ['bin','lib']
+            clean: ['bin', 'lib']
         },
         copy: {
             dist: {
                 files: [
                     {
-                        src: process.env['HOME'] + '/.m2/repository/guru/nidi/raml/raml-tester-proxy/' + version + '/raml-tester-proxy-' + version + '.jar',
-                        dest: 'bin/raml-tester-proxy.jar'
+                        src: process.env['HOME'] + '/.m2/repository/guru/nidi/raml/raml-tester-standalone/' + version + '/raml-tester-standalone-' + version + '.jar',
+                        dest: 'bin/raml-tester-standalone.jar'
                     }, {
                         cwd: 'src/',
                         expand: true,
-                        src: 'raml-tester.js',
+                        src: ['raml-tester.js', 'raml-tester-browser.js'],
                         dest: 'lib'
-                    },{
+                    }, {
                         cwd: 'src/',
                         expand: true,
                         src: 'raml-tester-cli',
@@ -26,7 +26,7 @@ module.exports = function (grunt) {
                     }]
             }
         },
-        mochacli:{
+        mochacli: {
             all: ['test/*.js']
         }
     });

@@ -1,65 +1,25 @@
 #!/usr/bin/env node
 
-const rt = require('raml-tester');
-const params = process.argv.slice(2);
+const rt = require('raml-tester'),
+    params = process.argv.slice(2),
+    opts = rt.parseCli(params);
 
-switch (params[0]) {
-case 'ping':
-    rt.stop(parseParams(params).port);
-    console.log('Proxy stopped');
-    break;
-case 'stop':
-    rt.stop(parseParams(params).port);
-    console.log('Proxy stopped');
-    break;
-case 'reload':
-    request('reload', parseParams(params));
-    break;
-case 'reports':
-    request('reports', parseParams(params));
-    break;
-case 'usage':
-    request('usage', parseParams(params));
-    break;
-default:
-    rt.start(rt.parseServerCli(params), function (out) {
+switch (opts.mode) {
+case 'server':
+    rt.start(opts, function (out) {
         console.log(out);
     });
-}
-
-function parseParams(params) {
-    var res = {port: 8099, clearReports: false, clearUsage: false};
-
-    function parseParam(param) {
-        switch (param) {
-        case 'reports':
-            res.clearReports = true;
-            break;
-        case 'usage':
-            res.clearUsage = true;
-            break;
-        default:
-            console.log("Ignoring unknown option: '" + params[i] + "'. Allowed are 'reports' and 'usage'");
-        }
-    }
-
-    for (var i = 1; i < params.length; i++) {
-        if (i == 1) {
-            var p = parseInt(params[i]);
-            if (isNaN(p)) {
-                parseParam(params[i]);
-            } else {
-                res.port = p;
-            }
-        }
-    }
-    return res;
-}
-
-function request(name, config) {
-    rt.request(name, config, function (res) {
-        console.log(res);
-    }, function (e) {
-        console.log('Could not execute action: ' + e);
+    break;
+case 'client':
+    rt.command(opts, function (ok) {
+        console.log(ok);
+    }, function (fail) {
+        console.log(fail);
     });
+    break;
+default:
+    rt.help(function (out) {
+        console.log(out);
+    });
+    break;
 }
