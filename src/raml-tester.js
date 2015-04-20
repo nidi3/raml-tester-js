@@ -87,7 +87,9 @@ function parseServerCli(args) {
         port: 8099,
         format: 'text',
         ignoreX: false,
-        async: false
+        async: false,
+        minDelay: 0,
+        maxDelay: 0
     };
     parseOpts(args, function (opt, val) {
         switch (opt) {
@@ -117,6 +119,15 @@ function parseServerCli(args) {
             break;
         case 'a':
             res.async = true;
+            break;
+        case 'd':
+            const pos = val.indexOf('-');
+            res.maxDelay = parseInt(val.substring(pos + 1));
+            if (pos < 0) {
+                res.minDelay = res.maxDelay;
+            } else {
+                res.minDelay = parseInt(val.substring(0, pos));
+            }
             break;
         }
     });
@@ -179,7 +190,14 @@ function renderServerCli(opts) {
                 res += ' -a';
             }
             break;
+        case 'minDelay':
+            res += ' -d' + val + '-' + opts.maxDelay;
+            break;
+        case 'maxDelay':
+            //handled in minDelay
+            break;
         }
+
     }
     return res.substring(1);
 }

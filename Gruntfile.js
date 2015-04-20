@@ -1,6 +1,6 @@
 /*global module*/
 
-var version = '0.0.4-SNAPSHOT';
+var version = '0.0.5-SNAPSHOT';
 
 module.exports = function (grunt) {
     grunt.initConfig({
