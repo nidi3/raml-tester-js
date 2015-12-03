@@ -2,7 +2,7 @@
   "name": "raml-tester",
   "title": "Verify requests / responses against a RAML definition",
   "description": "Verify requests / responses against a RAML definition",
-  "version": "0.8.3",
+  "version": "0.8.6",
   "license": "Apache-2.0",
   "private": false,
   "author": {
