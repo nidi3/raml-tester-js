@@ -3,6 +3,7 @@
   "title": "Verify requests / responses against a RAML definition",
   "description": "Verify requests / responses against a RAML definition",
   "version": "0.8.3",
+  "license": "Apache-2.0",
   "private": false,
   "author": {
     "name": "Stefan Niederhauser <ich@nidi.guru>",
